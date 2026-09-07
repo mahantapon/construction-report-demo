@@ -974,6 +974,12 @@ function onData(data){
       nt.style.display='';
     }
   } catch(e){}
+  // แท็บงวดงาน: ไม่ได้กรอกชีตงวดงาน = ซ่อนแท็บไปเลย (ดีกว่าโชว์แท็บว่าง)
+  //  → บริษัทที่ไม่อยากให้ลูกค้าเห็นเรื่องเงิน แค่เว้นคอลัมน์ชีตงวดงานว่างไว้
+  try {
+    const bi = (DATA.billing && DATA.billing.items) ? DATA.billing.items.length : 0;
+    if (!bi && HIDE_TABS.indexOf('f') < 0) HIDE_TABS.push('f');
+  } catch(e){}
   // ปุ่ม PDF: ซ่อนทั้งปุ่มถ้ายังไม่เปิดใช้ระบบสร้าง PDF (ดู ⚙ ตั้งค่า)
   try { if(!PDF_ENABLED) $('pdfbtn').style.display='none'; } catch(e){}
   showTab('o');   // ลูกค้าเปิดมาเจอหน้าภาพรวมก่อนเสมอ
